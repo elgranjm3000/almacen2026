@@ -1,5 +1,6 @@
 import { restGet } from "@/lib/db";
 import { PageHeader, Metric, Section } from "@/components/ui";
+import { TasaForm, AsientoManualForm } from "./forms";
 
 const momentoEtiqueta: Record<string, string> = {
   COMPROMISO: "Compromiso",
@@ -43,8 +44,20 @@ interface Tasa {
   tasa_ves_usd: number;
 }
 
+interface Cuenta {
+  id: string;
+  codigo_cuenta: string;
+  nombre_cuenta: string;
+}
+
+interface Partida {
+  id: string;
+  codigo_partida: string;
+  denominacion: string;
+}
+
 export default async function Contabilidad() {
-  const [asientos, resumenes, mayor, tasas] = await Promise.all([
+  const [asientos, resumenes, mayor, tasas, centros, cuentas, partidas] = await Promise.all([
     restGet<Asiento>("asientos_contables", {
       select: "*,centro:centro_salud_id(nombre)",
       order: "fecha",
@@ -58,6 +71,9 @@ export default async function Contabilidad() {
       select: "cuenta:cuenta_id(codigo_cuenta,nombre_cuenta,tipo),debe_ves,haber_ves",
     }),
     restGet<Tasa>("tasas_cambio_bcv", { order: "fecha", ascending: false, limit: 10 }),
+    restGet<{ id: string; nombre: string }>("centros_salud", { order: "nombre" }),
+    restGet<Cuenta>("cuentas_contables", { order: "codigo_cuenta" }),
+    restGet<Partida>("partidas_onapre", { order: "codigo_partida" }),
   ]);
 
   const totales = new Map<string, { ves: number; haber: number }>();
@@ -86,6 +102,18 @@ export default async function Contabilidad() {
         subtitle="Asientos generados por los movimientos del almacén, valorizados en bolívares y dólares con la tasa BCV vigente."
       />
       <div className="px-4 pb-16 md:px-8">
+        <Section title="Tasa BCV">
+          <TasaForm />
+        </Section>
+
+        <Section title="Registrar comprobante manual">
+          <AsientoManualForm
+            centros={centros.map((c) => ({ id: c.id, label: c.nombre }))}
+            cuentas={cuentas.map((c) => ({ codigo: c.codigo_cuenta, label: `${c.codigo_cuenta} ${c.nombre_cuenta}` }))}
+            partidas={partidas.map((p) => ({ id: p.id, label: `${p.codigo_partida} ${p.denominacion}` }))}
+          />
+        </Section>
+
         <div className="mt-6 grid grid-cols-2 gap-x-10 gap-y-8 md:mt-8 lg:grid-cols-4">
           <Metric value={asientos.length} label="Comprobantes (últimos 50)" />
           <Metric value={totalDebe.toLocaleString("es-VE", { maximumFractionDigits: 0 })} label="Bs. movimientos" />
