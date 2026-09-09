@@ -1,6 +1,7 @@
 import { restGet } from "@/lib/db";
 import { PageHeader, Metric, Section } from "@/components/ui";
 import { TasaForm, AsientoManualForm } from "./forms";
+import Link from "next/link";
 
 const momentoEtiqueta: Record<string, string> = {
   COMPROMISO: "Compromiso",
@@ -101,6 +102,14 @@ export default async function Contabilidad() {
       <PageHeader
         title="Contabilidad"
         subtitle="Asientos generados por los movimientos del almacén, valorizados en bolívares y dólares con la tasa BCV vigente."
+        actions={
+          <Link
+            href="/contabilidad/reportes"
+            className="rounded-md border border-ink/25 px-4 py-2 text-[13.5px] font-550 text-ink transition-colors hover:border-ink/50 hover:bg-ink/5"
+          >
+            Reportes PDF
+          </Link>
+        }
       />
       <div className="px-4 pb-16 md:px-8">
         <Section title="Tasa BCV">

@@ -29,10 +29,18 @@ export async function restGet<T = Record<string, unknown>>(
   if (opts.limit) params.set('limit', String(opts.limit))
   for (const [k, v] of Object.entries(opts.filters ?? {})) params.set(k, v)
 
-  const res = await fetch(`${URL}/rest/v1/${resource}?${params}`, {
-    headers: { apikey: SECRET, Authorization: `Bearer ${SECRET}` },
-    cache: 'no-store',
-  })
+  const hacer = () =>
+    fetch(`${URL}/rest/v1/${resource}?${params}`, {
+      headers: { apikey: SECRET, Authorization: `Bearer ${SECRET}` },
+      cache: 'no-store',
+    })
+
+  let res = await hacer()
+  // Reintenta una vez ante errores transitorios (ej. desfase horario con Supabase)
+  if (!res.ok && (res.status === 401 || res.status >= 500)) {
+    await new Promise((r) => setTimeout(r, 800))
+    res = await hacer()
+  }
   if (!res.ok) {
     throw new Error(`REST ${resource}: ${res.status} ${await res.text()}`)
   }
