@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Almacén DIGESALUD: marca "A" de estantería, tinta + teal -->
+  <rect width="64" height="64" rx="14" fill="#142430"/>
+  <path d="M32 12 L52 52 H41.5 L32 30.5 L22.5 52 H12 Z" fill="#0b7285"/>
+  <rect x="24.5" y="40" width="15" height="5" rx="2.5" fill="#f6f8f9"/>
+</svg>
