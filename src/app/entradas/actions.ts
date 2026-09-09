@@ -12,6 +12,7 @@ export interface EntradaInput {
   cantidad: number
   stock_minimo: number
   observaciones: string
+  costo_unitario_ves: number
 }
 
 export async function registrarEntrada(input: EntradaInput) {
@@ -21,6 +22,8 @@ export async function registrarEntrada(input: EntradaInput) {
   if (!input.fecha_vencimiento) return { error: 'Indica la fecha de vencimiento del lote.' }
   if (!input.cantidad || input.cantidad <= 0)
     return { error: 'La cantidad recibida debe ser mayor que cero.' }
+  if (input.costo_unitario_ves < 0)
+    return { error: 'El costo unitario no puede ser negativo.' }
 
   const sesion = await obtenerSesion()
   if (!sesion) return { error: 'Tu sesión expiró: vuelve a iniciar sesión.' }
@@ -34,6 +37,7 @@ export async function registrarEntrada(input: EntradaInput) {
     p_minimo: input.stock_minimo || null,
     p_usuario: sesion.id,
     p_observaciones: input.observaciones.trim() || null,
+    p_costo_unitario_ves: input.costo_unitario_ves || 0,
   })
   if (r.error) return { error: r.error }
 

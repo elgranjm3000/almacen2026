@@ -29,6 +29,7 @@ export default function EntradaForm({
       cantidad: Number(fd.get('cantidad')),
       stock_minimo: Number(fd.get('stock_minimo')),
       observaciones: String(fd.get('observaciones')),
+      costo_unitario_ves: Number(fd.get('costo_unitario_ves')),
     })
     if (r.error) {
       setError(r.error)
@@ -87,6 +88,10 @@ export default function EntradaForm({
         <label className="block text-[13px] text-ink-soft">
           Stock mínimo de alerta
           <input name="stock_minimo" type="number" min={0} placeholder="50" className={`mt-1 ${inputCls}`} />
+        </label>
+        <label className="block text-[13px] text-ink-soft">
+          Costo unitario (Bs.)
+          <input name="costo_unitario_ves" type="number" min={0} step="0.01" required className={`mt-1 ${inputCls}`} />
         </label>
         <label className="block text-[13px] text-ink-soft sm:col-span-2">
           Observaciones (opcional)

@@ -7,6 +7,7 @@ interface Lote {
   fecha_vencimiento: string;
   cantidad_actual: number;
   stock_minimo_alerta: number;
+  costo_unitario_usd: number | null;
   centro: { nombre: string } | null;
   insumo: { nombre_generico: string; codigo_sku: string; presentacion: string } | null;
 }
@@ -34,6 +35,7 @@ export default async function Inventario() {
                 <th>Lote</th>
                 <th className="text-right">Cantidad</th>
                 <th className="text-right">Mínimo</th>
+                <th className="text-right">Costo unit. (USD)</th>
                 <th>Vence</th>
                 <th>Estado</th>
               </tr>
@@ -50,6 +52,7 @@ export default async function Inventario() {
                   <td>{l.numero_lote}</td>
                   <td className="text-right">{l.cantidad_actual}</td>
                   <td className="text-right text-ink-soft">{l.stock_minimo_alerta}</td>
+                  <td className="text-right">{l.costo_unitario_usd ? `$ ${l.costo_unitario_usd.toLocaleString("es-VE", { maximumFractionDigits: 2 })}` : "—"}</td>
                   <td>{l.fecha_vencimiento}</td>
                   <td>
                     <Badge estado={estadoLote(l.cantidad_actual, l.stock_minimo_alerta, l.fecha_vencimiento)} />
