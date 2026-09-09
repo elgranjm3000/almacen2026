@@ -29,7 +29,8 @@ interface Asiento {
 
 interface ResumenAsiento {
   asiento_id: string;
-  total_debe_ves: number;
+  debe_ves: number | string;
+  haber_ves: number | string;
 }
 
 interface Mayor {
@@ -79,7 +80,7 @@ export default async function Contabilidad() {
   const totales = new Map<string, { ves: number; haber: number }>();
   for (const d of resumenes) {
     const t = totales.get(d.asiento_id) ?? { ves: 0, haber: 0 };
-    t.ves += Number(d.total_debe_ves);
+    t.ves += Number(d.debe_ves);
     totales.set(d.asiento_id, t);
   }
   const vesHoy = tasas[0]?.tasa_ves_usd ?? 0;
