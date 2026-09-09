@@ -34,7 +34,8 @@ export default function LoginPage() {
   return (
     <div className="grid min-h-dvh place-items-center bg-background px-4">
       <div className="w-full max-w-sm">
-        <h1 className="font-display text-[26px] font-600 tracking-tight">Almacén</h1>
+        <h1 className="font-display text-[26px] font-600 tracking-tight">SIFAR</h1>
+        <p className="text-[13px] text-ink-soft">Sistema Integrado de Farmacia Militar</p>
         <p className="mt-1 text-[14px] text-ink-soft">
           Inicia sesión para gestionar el inventario y las dispensaciones.
         </p>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Almacén DIGESALUD: marca "A" de estantería, tinta + teal -->
+  <!-- SIFAR: Sistema Integrado de Farmacia Militar -->
   <rect width="64" height="64" rx="14" fill="#142430"/>
-  <path d="M32 12 L52 52 H41.5 L32 30.5 L22.5 52 H12 Z" fill="#0b7285"/>
-  <rect x="24.5" y="40" width="15" height="5" rx="2.5" fill="#f6f8f9"/>
+  <path d="M44 22c-2.5-3-6.5-4.6-11.5-4.6-7 0-11.5 3.3-11.5 8.6 0 4.7 3.3 7 10.4 8.5 6.2 1.3 8.3 2.6 8.3 5.2 0 2.9-2.7 4.6-7.2 4.6-4.4 0-8-1.6-10.6-4.7L18 44.3c3.2 3.9 8 6.1 13.9 6.1 7.5 0 12.3-3.6 12.3-9.2 0-5-3.5-7.4-10.9-9-5.9-1.2-7.8-2.4-7.8-4.8 0-2.5 2.4-4 6.5-4 3.8 0 6.8 1.3 9.1 3.9L44 22z" fill="#0b7285"/>
+  <circle cx="49" cy="49" r="4" fill="#f6f8f9"/>
 </svg>

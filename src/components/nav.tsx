@@ -21,10 +21,10 @@ function Marca() {
   return (
     <Link href="/" className="block px-6 pt-7 pb-6">
       <span className="font-display text-[19px] font-600 leading-tight tracking-tight text-white">
-        Almacén
+        SIFAR
       </span>
       <span className="mt-0.5 block text-[12px] text-white/55">
-        DIGESALUD · Dirección de Salud Militar
+        Sistema Integrado de Farmacia Militar
       </span>
     </Link>
   )
@@ -84,7 +84,7 @@ export default function Nav({
       <header className="sticky top-0 z-20 bg-ink text-white md:hidden">
         <div className="flex items-center justify-between px-4 py-3">
           <Link href="/" className="font-display text-[17px] font-600 tracking-tight">
-            Almacén
+            SIFAR
           </Link>
           <button
             aria-expanded={abierto}

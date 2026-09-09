@@ -14,8 +14,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Almacén DIGESALUD",
-  description: "Control de inventario y dispensación de insumos médicos",
+  title: "SIFAR — Sistema Integrado de Farmacia Militar",
+  description: "Control de inventario, dispensación y contabilidad de insumos médicos — DIGESALUD",
 };
 
 export const viewport: Viewport = {
