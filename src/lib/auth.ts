@@ -1,11 +1,26 @@
 'use server'
 
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 const URL = process.env.SUPABASE_URL!
 const KEY = process.env.SUPABASE_SECRET_KEY!
 const COOKIE = 'almacen_sesion'
+
+async function registrarAcceso(accion: 'INICIO' | 'INICIO_FALLIDO' | 'CIERRE', email: string, usuarioId?: string) {
+  const h = await headers()
+  await fetch(`${URL}/rest/v1/registro_accesos`, {
+    method: 'POST',
+    headers: { apikey: KEY, Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      usuario_id: usuarioId ?? null,
+      email,
+      accion,
+      direccion_ip: h.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null,
+      agente: h.get('user-agent') ?? null,
+    }),
+  })
+}
 
 export interface Sesion {
   id: string
@@ -43,18 +58,24 @@ export async function iniciarSesion(email: string, password: string): Promise<st
     body: JSON.stringify({ email, password }),
     cache: 'no-store',
   })
-  if (!res.ok) return 'Correo o contraseña incorrectos.'
-  const { access_token } = await res.json()
+  if (!res.ok) {
+    await registrarAcceso('INICIO_FALLIDO', email)
+    return 'Correo o contraseña incorrectos.'
+  }
+  const { access_token, user } = await res.json()
   ;(await cookies()).set(COOKIE, JSON.stringify({ access_token }), {
     httpOnly: true,
     sameSite: 'lax',
     path: '/',
     maxAge: 60 * 60 * 8,
   })
+  await registrarAcceso('INICIO', email, user?.id)
   return null
 }
 
 export async function cerrarSesion() {
+  const sesion = await obtenerSesion()
+  if (sesion) await registrarAcceso('CIERRE', sesion.email, sesion.id)
   ;(await cookies()).delete(COOKIE)
   redirect('/login')
 }
