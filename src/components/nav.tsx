@@ -14,7 +14,6 @@ const modulos = [
   { href: '/afiliados', label: 'Afiliados' },
   { href: '/insumos', label: 'Catálogo' },
   { href: '/centros', label: 'Centros de salud' },
-  { href: '/accesos', label: 'Accesos' },
   { href: '/contabilidad', label: 'Contabilidad' },
 ]
 
