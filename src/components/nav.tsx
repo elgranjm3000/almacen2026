@@ -39,7 +39,7 @@ export default function Nav({
   const [abierto, setAbierto] = useState(false)
 
   const enlaces = modulos.map((m) => {
-    const activo = pathname === m.href
+    const activo = m.href === '/' ? pathname === '/' : pathname.startsWith(m.href)
     return (
       <Link
         key={m.href}
